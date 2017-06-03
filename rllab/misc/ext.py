@@ -198,6 +198,7 @@ def set_seed(seed):
         print(e)
     try:
         import tensorflow as tf
+        print("TensorFlow was imported, seed =", seed)
         tf.set_random_seed(seed)
     except Exception as e:
         print(e)

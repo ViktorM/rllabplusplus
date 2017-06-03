@@ -3,6 +3,7 @@ import numpy as np
 from rllab.algos.base import RLAlgorithm
 import rllab.misc.logger as logger
 import rllab.plotter as plotter
+from sandbox.rocky.tf.policies.base import Policy
 import tensorflow as tf
 from sandbox.rocky.tf.samplers.batch_sampler import BatchSampler
 from sandbox.rocky.tf.samplers.vectorized_sampler import VectorizedSampler
@@ -11,6 +12,8 @@ from rllab.misc import ext
 from rllab.core.serializable import Serializable
 from sandbox.rocky.tf.misc import tensor_utils
 from sandbox.rocky.tf.optimizers.first_order_optimizer import FirstOrderOptimizer
+from rllab.sampler.utils import rollout
+
 
 class BatchPolopt(RLAlgorithm):
     """
@@ -151,6 +154,7 @@ class BatchPolopt(RLAlgorithm):
             sampler_args = dict()
 
         self.sampler = sampler_cls(self, **sampler_args)
+        self.init_opt()
 
     def start_worker(self):
         self.sampler.start_worker()
@@ -221,6 +225,8 @@ class BatchPolopt(RLAlgorithm):
                             input("Plotting evaluation run: Press Enter to "
                                   "continue...")
         self.shutdown_worker()
+        if created_session:
+            sess.close()
 
     def log_diagnostics(self, paths):
         self.env.log_diagnostics(paths)
