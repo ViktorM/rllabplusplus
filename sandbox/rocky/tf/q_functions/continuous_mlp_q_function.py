@@ -16,9 +16,9 @@ class ContinuousMLPQFunction(QFunction, LayersPowered, Serializable):
             action_merge_layer=-2,
             output_nonlinearity=None,
             hidden_W_init=L.XavierUniformInitializer(),
-            hidden_b_init=tf.zeros_initializer,
+            hidden_b_init=tf.zeros_initializer(),
             output_W_init=L.XavierUniformInitializer(),
-            output_b_init=tf.zeros_initializer,
+            output_b_init=tf.zeros_initializer(),
             bn=False):
         Serializable.quick_init(self, locals())
 

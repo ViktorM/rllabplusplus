@@ -133,7 +133,7 @@ class DDPG(RLAlgorithm):
     @overrides
     def train(self):
         with tf.Session() as sess:
-            sess.run(tf.initialize_all_variables())
+            sess.run(tf.global_variables_initializer())
             # This seems like a rather sequential method
             pool = SimpleReplayPool(
                 max_pool_size=self.replay_pool_size,
@@ -145,7 +145,7 @@ class DDPG(RLAlgorithm):
 
             self.init_opt()
             # This initializes the optimizer parameters
-            sess.run(tf.initialize_all_variables())
+            sess.run(tf.global_variables_initializer())
             itr = 0
             path_length = 0
             path_return = 0

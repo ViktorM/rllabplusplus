@@ -172,7 +172,7 @@ class BatchPolopt(RLAlgorithm):
 
     def train(self):
         with tf.Session() as sess:
-            sess.run(tf.initialize_all_variables())
+            sess.run(tf.global_variables_initializer())
             if self.qprop:
                 pool = SimpleReplayPool(
                     max_pool_size=self.replay_pool_size,
@@ -183,7 +183,7 @@ class BatchPolopt(RLAlgorithm):
             self.start_worker()
             self.init_opt()
             # This initializes the optimizer parameters
-            sess.run(tf.initialize_all_variables())
+            sess.run(tf.global_variables_initializer())
             start_time = time.time()
             for itr in range(self.start_itr, self.n_itr):
                 itr_start_time = time.time()
@@ -225,8 +225,8 @@ class BatchPolopt(RLAlgorithm):
                             input("Plotting evaluation run: Press Enter to "
                                   "continue...")
         self.shutdown_worker()
-        if created_session:
-            sess.close()
+   #     if created_session:
+   #         sess.close()
 
     def log_diagnostics(self, paths):
         self.env.log_diagnostics(paths)
